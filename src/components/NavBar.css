@@ -1,0 +1,19 @@
+.navbar > a{
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 150px;
+  padding: 5px;
+  margin: 0 6px 6px;
+  background: #eed9c4;
+  text-decoration: none;
+  text-align: center;
+  font-size: min(10vw, 15px) ;
+  color: black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; 
+}

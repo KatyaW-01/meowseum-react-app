@@ -1,8 +1,12 @@
 import React from "react"
+import NavBar from "../components/NavBar"
 
 function Favorites() {
   return (
-    <h1>The user's favorite art pieces will go here</h1>
+    <>
+    <NavBar />
+    <p>The user's favorite art pieces will go here</p>
+    </>
   )
 }
 
