@@ -1,19 +1,35 @@
-.navbar > a{
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px; 
+}
+
+.logo {
+  margin-left: 20px;
+}
+
+.logo img{
+  width: 120px;
+  height: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a{
   display: inline-block;
   box-sizing: border-box;
   border-radius: 5px;
-  width: 150px;
+  width: 120px;
   padding: 5px;
   margin: 0 6px 6px;
+  margin-top: 35px;
   background: #eed9c4;
   text-decoration: none;
   text-align: center;
-  font-size: min(10vw, 15px) ;
+  font-size: min(10vw, 15px);
   color: black;
-}
-
-.navbar {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px; 
 }
