@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px; 
+  margin-top: 10px; 
 }
 
 .logo {
@@ -10,7 +10,7 @@
 }
 
 .logo img{
-  width: 120px;
+  width: 130px;
   height: auto;
 }
 
