@@ -8,7 +8,7 @@ function Gallery() {
   return (
     <>
     <NavBar />
-    <p>Gallery of Cat Art from API</p>
+    <h1>Gallery </h1>
     <Outlet context = {{catArt}}/>
     </>
   )
