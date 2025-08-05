@@ -7,9 +7,9 @@ function useArt() {
     fetch("https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true")
     .then((response) => response.json())
     .then((data) => {
-      setCatArt(data)
+      setCatArt(data.data)
     })
-  })
+  },[])
 
   return {catArt, setCatArt}
 
