@@ -1,7 +1,7 @@
 import React from "react"
 import { useEffect, useState } from "react";
 
-function ArtCard({art}) {
+function ArtCard({art, artId, handleSave}) {
   const [imageUrl, setImageUrl] = useState(null)
   const [artist, setArtist] = useState(null)
 
@@ -22,7 +22,7 @@ function ArtCard({art}) {
     }
     fetchArtDetails()
   },[art.api_link])
-
+  
   return (
     <div className="art-card">
       <img 
@@ -32,10 +32,10 @@ function ArtCard({art}) {
           e.target.onError = null;
           e.target.src = "/photo_unavailable.jpg" 
         }} >
-      
       </img>
       <h2>{art.title}</h2>
       <p>{artist}</p>
+      <button onClick={()=> handleSave(art.id)}>Save</button>
     </div>
   )
 }

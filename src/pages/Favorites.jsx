@@ -2,6 +2,8 @@ import React from "react"
 import NavBar from "../components/NavBar"
 
 function Favorites() {
+  const storedIds = JSON.parse(localStorage.artID)
+  console.log("stored id's:", storedIds)
   return (
     <>
     <NavBar />
