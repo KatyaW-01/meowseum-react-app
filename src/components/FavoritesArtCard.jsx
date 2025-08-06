@@ -12,7 +12,7 @@ function FavoritesArtCard({art}) {
       }}>
       </img>
       <h2>{art.title}</h2>
-      <p>{}art.artist</p>
+      <p>{art.artist}</p>
     </div>
   )
 }
