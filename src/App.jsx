@@ -5,7 +5,6 @@ import Home from "./pages/Home"
 import Gallery from "./pages/Gallery"
 import Favorites from "./pages/Favorites"
 import ArtList from "./components/ArtList"
-import FavoritesArtCard from "./components/FavoritesArtCard"
 
 function App() {
   return (
@@ -14,9 +13,7 @@ function App() {
       <Route path="/gallery" element={<Gallery />} >
         <Route index element = {<ArtList />} />
       </Route >
-      <Route path="/favorites" element={<Favorites />} >
-        <Route index element = {<FavoritesArtCard />} />
-      </Route >
+      <Route path="/favorites" element={<Favorites />} />
     </Routes>
   
   )
