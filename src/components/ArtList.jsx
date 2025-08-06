@@ -7,7 +7,6 @@ function ArtList() {
   const {catArt} = useOutletContext()
   const [artId, setArtId] = useState(() => {
     const saved = localStorage.getItem("artID")
-    console.log("saved:",saved)
     return saved ? JSON.parse(saved) : []
   })
 

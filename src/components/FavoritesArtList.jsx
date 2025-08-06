@@ -4,6 +4,10 @@ import FavoritesArtCard from "./FavoritesArtCard"
 
 function FavoritesArtList() {
   const {artData} = useOutletContext()
+  const ids = localStorage.getItem("artID")
+  if (!ids) {
+    return <div>No Favorites Saved</div>
+  }
   return (
     <>
       {artData.map((art) => (
