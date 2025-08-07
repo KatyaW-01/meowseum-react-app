@@ -10,7 +10,7 @@ function Gallery() {
     <NavBar />
     <h1>Gallery </h1>
     <form>
-      <label for="artType">Filter Art:</label>
+      <label htmlFor="artType">Filter Art:</label>
       <select name="artType" id="artType" defaultValue="">
         <option value="" disabled >Select type</option>
         <option value="sculpture">Sculpture</option>
