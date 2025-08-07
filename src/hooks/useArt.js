@@ -12,7 +12,7 @@ function useArt() {
     })
   },[])
 
-  //useEffect(() => {
+  useEffect(() => {
     catArt.map((art)=> {
       if (art.api_link !== null) {
         fetch(art.api_link)
@@ -30,7 +30,7 @@ function useArt() {
         })
       }
     })
-  //},[])
+  },[catArt])
 
   console.log("data for filtering:",data)
 
