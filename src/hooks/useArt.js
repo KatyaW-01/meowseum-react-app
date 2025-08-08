@@ -14,19 +14,13 @@ function useArt() {
       let totalPages = 0
       do {
         const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=${page}&limit=100`)
-        console.log(`Fetched page ${page} response status:`, response.status)
         const data = await response.json()
-        console.log(`Page ${page} data received:`, data)
         allResults = [...allResults, ...data.data]
-        console.log(`AllResults length after page ${page}:`, allResults.length)
         totalPages = 10
         page += 1
         
       } while (page <= totalPages)
-      console.log("results:",allResults)
-      console.log('Setting catArt with', allResults.length, 'items')
       setCatArt(allResults)
-      
     }
     fetchCatArt()
     
@@ -78,7 +72,7 @@ function useArt() {
     })
   },[catArt])
 
-  console.log("cat art",catArtDetails.length)
+  //console.log("cat art",catArtDetails)
  
 
   //get data for the art users save 
