@@ -9,7 +9,8 @@ function FavoritesArtCard({art}) {
       onError = {(e) => {
         e.target.onError = null;
         e.target.src = "/photo_unavailable.jpg" 
-      }}>
+      }}
+      loading="eager">
       </img>
       <h2>{art.title}</h2>
       <p>{art.artist}</p>
