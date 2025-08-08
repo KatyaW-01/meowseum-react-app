@@ -1,6 +1,6 @@
 import React from "react"
 
-function FavoritesArtCard({art}) {
+function FavoritesArtCard({art, handleClear}) {
   return (
     <div>
       <img 
@@ -14,6 +14,7 @@ function FavoritesArtCard({art}) {
       </img>
       <h2>{art.title}</h2>
       <p>{art.artist}</p>
+      <button onClick={() => handleClear(art.id)}>Clear</button>
     </div>
   )
 }

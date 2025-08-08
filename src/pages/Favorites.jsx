@@ -16,8 +16,8 @@ function Favorites() {
     <>
     <NavBar />
     <h2>Your Personal Gallery</h2>
-    <button onClick={() => handleClear()}>Clear Favorites</button>
-    <Outlet context={{artData}}/>
+    <button onClick={() => handleClear()}>Clear All</button>
+    <Outlet context={{artData, setArtData}}/>
     </>
   )
 }
