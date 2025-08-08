@@ -50,6 +50,7 @@ function useArt() {
     })
   },[catArt])
 
+  //get data for the art users save 
   const storedIds = JSON.parse(localStorage.getItem("artID"))
   
   const [artData, setArtData] = useState([])
