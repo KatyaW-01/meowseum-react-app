@@ -2,46 +2,56 @@ import { useEffect, useState } from 'react';
 
 function useArt() {
   const [catArt, setCatArt] = useState([])
-  const [data, setData] = useState([])
+  const [catArtDetails, setCatArtDetails] = useState([])
 
+  //fetch inital array of data, storing in state
   useEffect(() => {
-    fetch("https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=1&limit=100")
-    .then((response) => response.json())
-    .then((data) => {
-      setCatArt(data.data)
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    async function fetchCatArt() {
+      try {
+        const response = await fetch("https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=1&limit=100")
+        const data = await response.json()
+        setCatArt(data.data)
+      } catch (error) {
+        console.error("Failed to fetch cat art", error)
+      }
+    }
+    fetchCatArt()
   },[])
 
+  //make the second api call for each art piece to get the extra necessary data
   useEffect(() => {
-    catArt.map((art)=> {
+    catArt.forEach((art) => {
       if (art.api_link !== null) {
-        fetch(art.api_link)
-        .then((response) => response.json())
-        .then((data) => {
-          const artData = {
-            'id': art.id,
-            'type': data.data.artwork_type_title,
-            'data': data
+        async function fetchCatArtDetails() {
+          try {
+            const response = await fetch(art.api_link)
+            const data = await response.json()
+            const iiifUrl = data.config.iiif_url
+            const imageID = data.data.image_id
+            console.log("art id:",data.data.id)
+            const artDetails = {
+              'id': data.data.id,
+              'title': data.data.title,
+              'artist': data.data.artist_display,
+              'image': `${iiifUrl}/${imageID}/full/843,/0/default.jpg`,
+              'type': data.data.artwork_type_title
+            }
+
+            setCatArtDetails(prev => {
+              const alreadyExists = prev.some(artPiece => artPiece.id === artDetails.id)
+              return alreadyExists ? prev : [...prev,artDetails]
+            })
+
+          } catch (error) {
+            console.error("Failed to fetch art details", error)
           }
-          setData(prev => {
-            const alreadyExists = prev.some(artPiece => artPiece.id === artData.id)
-            return alreadyExists ? prev : [...prev, artData]
-          })
-        })
+        }
+        fetchCatArtDetails()
       }
     })
   },[catArt])
 
-  // console.log("data for filtering:",data)
-
-  // function filterByType() {
-
-  // }
-
-  return {catArt, setCatArt, data}
+  return {catArtDetails}
 
 }
 

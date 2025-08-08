@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ArtCard from "./ArtCard"
 
 function ArtList() {
-  const {catArt, filteredData} = useOutletContext()
+  const {catArtDetails, filteredData} = useOutletContext()
   const [artId, setArtId] = useState(() => {
     const saved = localStorage.getItem("artID")
     return saved ? JSON.parse(saved) : []
@@ -20,13 +20,28 @@ function ArtList() {
     localStorage.setItem("artID", JSON.stringify(artId));
   }, [artId]);
 
+
+  if (filteredData.length > 0) {
+    return <div>
+      {
+        filteredData.map((art)=> (
+          <div key={art.id}>
+            <ArtCard art={art} handleSave={handleSave}/>
+          </div>
+        ))
+      }
+    </div>
+  }
+
   return (
     <div className="art-div">
-      {catArt.map((art) => (
+      {
+      catArtDetails.map((art) => (
         <div key={art.id}>
-          <ArtCard art={art} artId={artId} handleSave={handleSave}/>
+          <ArtCard art={art} handleSave={handleSave}/>
         </div>
-      ))}
+      ))
+      }
     </div>
   )
 }

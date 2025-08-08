@@ -5,20 +5,17 @@ import useArt from "../hooks/useArt"
 import { useState } from 'react';
 
 function Gallery() {
-  const {catArt} = useArt()
-  const {data} = useArt()
+  const {catArtDetails} = useArt()
   const [filteredData, setFilteredData] = useState([])
 
   function handleChange(event) {
     const value = event.target.value
-    const filteredArt = data.filter((art) => {
-      console.log("art:",art.data.data.artwork_type_title)
-      return art.data.data.artwork_type_title.toLowerCase().includes(value)
+    const filteredArt = catArtDetails.filter((art) => {
+      return art.type.toLowerCase().includes(value)
     })
+
     setFilteredData(filteredArt)
   }
-
-  //console.log(filteredData)
 
   return (
     <div>
@@ -35,7 +32,7 @@ function Gallery() {
         <option value="photograph">Photograph</option>
       </select>
     </form>
-    <Outlet context = {{catArt, filteredData}}/>
+    <Outlet context = {{catArtDetails, filteredData}}/>
     </div>
   )
 }
