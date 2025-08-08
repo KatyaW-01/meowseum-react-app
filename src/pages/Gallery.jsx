@@ -10,11 +10,14 @@ function Gallery() {
 
   function handleChange(event) {
     const value = event.target.value
-    const filteredArt = catArtDetails.filter((art) => {
-      return art.type.toLowerCase().includes(value)
-    })
-
-    setFilteredData(filteredArt)
+    if (value === 'all') {
+      setFilteredData([])
+    } else {
+      const filteredArt = catArtDetails.filter((art) => {
+        return art.type.toLowerCase().includes(value)
+      })
+      setFilteredData(filteredArt)
+    }
   }
 
   return (
@@ -25,11 +28,14 @@ function Gallery() {
       <label htmlFor="artType">Filter Art:</label>
       <select name="artType" id="artType" defaultValue="" onChange={handleChange}>
         <option value="" disabled >Select type</option>
-        <option value="sculpture">Sculpture</option>
+        <option value="all">All</option>
+        <option value="painting">Painting</option>
         <option value="print">Print</option>
-        <option value="textile">Textile</option>
-        <option value="ceramics">Ceramics</option>
+        <option value="watercolor">Watercolor</option>
         <option value="photograph">Photograph</option>
+        <option value="sculpture">Sculpture</option>
+        <option value="ceramics">Ceramics</option>
+        <option value="textile">Textile</option>
       </select>
     </form>
     <Outlet context = {{catArtDetails, filteredData}}/>
