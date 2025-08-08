@@ -3,28 +3,38 @@ import { useEffect, useState } from 'react';
 function useArt() {
   const [catArt, setCatArt] = useState([])
   const [catArtDetails, setCatArtDetails] = useState([])
+  const [loading, setLoading] = useState(true)
 
   //fetch inital array of data, storing in state
   useEffect(() => {
     async function fetchCatArt() {
+      setLoading(true)
       let allResults = []
       let page = 1
       let totalPages = 0
-
       do {
         const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=${page}&limit=100`)
+        console.log(`Fetched page ${page} response status:`, response.status)
         const data = await response.json()
+        console.log(`Page ${page} data received:`, data)
         allResults = [...allResults, ...data.data]
-        totalPages = 5
+        console.log(`AllResults length after page ${page}:`, allResults.length)
+        totalPages = 10
         page += 1
+        
       } while (page <= totalPages)
+      console.log("results:",allResults)
+      console.log('Setting catArt with', allResults.length, 'items')
       setCatArt(allResults)
+      
     }
     fetchCatArt()
+    
   },[])
 
   //make the second api call for each art piece to get the extra necessary data
   useEffect(() => {
+    let completed = 0
     catArt.forEach((art) => {
       if (art.api_link !== null) {
         async function fetchCatArtDetails() {
@@ -40,20 +50,36 @@ function useArt() {
               'image': `${iiifUrl}/${imageID}/full/843,/0/default.jpg`,
               'type': data.data.artwork_type_title
             }
-
-            setCatArtDetails(prev => {
+            const term = /\bcat(s)?\b/i
+            const titleHasCat = term.test(data.data.title ?? "")
+            const subjectHasCat = (data.data.subject_titles ?? []).some(subject => term.test(subject))
+            if (titleHasCat || subjectHasCat) {
+              setCatArtDetails(prev => {
               const alreadyExists = prev.some(artPiece => artPiece.id === artDetails.id)
               return alreadyExists ? prev : [...prev,artDetails]
             })
-
+            }
           } catch (error) {
             console.error("Failed to fetch art details", error)
+        } finally {
+          completed += 1
+          if (completed === catArt.length) {
+            setLoading(false)
           }
         }
+        }
         fetchCatArtDetails()
+      } else {
+        completed += 1
+        if (completed === catArt.length) {
+          setLoading(false)
+        }
       }
     })
   },[catArt])
+
+  console.log("cat art",catArtDetails.length)
+ 
 
   //get data for the art users save 
   const storedIds = JSON.parse(localStorage.getItem("artID"))
@@ -84,7 +110,7 @@ function useArt() {
     }
   },[])
 
-  return {catArtDetails, artData, setArtData}
+  return {catArtDetails, artData, setArtData, loading}
 
 }
 

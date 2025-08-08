@@ -5,7 +5,7 @@ import useArt from "../hooks/useArt"
 import { useState } from 'react';
 
 function Gallery() {
-  const {catArtDetails} = useArt()
+  const {catArtDetails, loading} = useArt()
   const [filteredData, setFilteredData] = useState([])
 
   function handleChange(event) {
@@ -38,7 +38,7 @@ function Gallery() {
         <option value="textile">Textile</option>
       </select>
     </form>
-    <Outlet context = {{catArtDetails, filteredData}}/>
+    <Outlet context = {{catArtDetails, filteredData, loading}}/>
     </div>
   )
 }
