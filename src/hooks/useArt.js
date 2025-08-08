@@ -10,6 +10,9 @@ function useArt() {
     .then((data) => {
       setCatArt(data.data)
     })
+    .catch(error => {
+      console.log(error)
+    })
   },[])
 
   useEffect(() => {
@@ -32,13 +35,13 @@ function useArt() {
     })
   },[catArt])
 
-  console.log("data for filtering:",data)
+  // console.log("data for filtering:",data)
 
-  function filterByType() {
+  // function filterByType() {
 
-  }
+  // }
 
-  return {catArt, setCatArt}
+  return {catArt, setCatArt, data}
 
 }
 

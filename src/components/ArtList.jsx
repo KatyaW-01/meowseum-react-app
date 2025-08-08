@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ArtCard from "./ArtCard"
 
 function ArtList() {
-  const {catArt} = useOutletContext()
+  const {catArt, filteredData} = useOutletContext()
   const [artId, setArtId] = useState(() => {
     const saved = localStorage.getItem("artID")
     return saved ? JSON.parse(saved) : []

@@ -2,16 +2,31 @@ import React from "react"
 import NavBar from "../components/NavBar"
 import { Outlet } from "react-router-dom"
 import useArt from "../hooks/useArt"
+import { useState } from 'react';
 
 function Gallery() {
   const {catArt} = useArt()
+  const {data} = useArt()
+  const [filteredData, setFilteredData] = useState([])
+
+  function handleChange(event) {
+    const value = event.target.value
+    const filteredArt = data.filter((art) => {
+      console.log("art:",art.data.data.artwork_type_title)
+      return art.data.data.artwork_type_title.toLowerCase().includes(value)
+    })
+    setFilteredData(filteredArt)
+  }
+
+  //console.log(filteredData)
+
   return (
     <div>
     <NavBar />
     <h1>Gallery </h1>
     <form>
       <label htmlFor="artType">Filter Art:</label>
-      <select name="artType" id="artType" defaultValue="">
+      <select name="artType" id="artType" defaultValue="" onChange={handleChange}>
         <option value="" disabled >Select type</option>
         <option value="sculpture">Sculpture</option>
         <option value="print">Print</option>
@@ -20,7 +35,7 @@ function Gallery() {
         <option value="photograph">Photograph</option>
       </select>
     </form>
-    <Outlet context = {{catArt}}/>
+    <Outlet context = {{catArt, filteredData}}/>
     </div>
   )
 }
