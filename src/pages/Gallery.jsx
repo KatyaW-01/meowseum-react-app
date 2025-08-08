@@ -19,7 +19,6 @@ function Gallery() {
       setFilteredData(filteredArt)
     }
   }
-  console.log(filteredData)
 
   return (
     <div>
