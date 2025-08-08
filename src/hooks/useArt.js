@@ -7,13 +7,18 @@ function useArt() {
   //fetch inital array of data, storing in state
   useEffect(() => {
     async function fetchCatArt() {
-      try {
-        const response = await fetch("https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=1&limit=100")
+      let allResults = []
+      let page = 1
+      let totalPages = 0
+
+      do {
+        const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=${page}&limit=100`)
         const data = await response.json()
-        setCatArt(data.data)
-      } catch (error) {
-        console.error("Failed to fetch cat art", error)
-      }
+        allResults = [...allResults, ...data.data]
+        totalPages = 5
+        page += 1
+      } while (page <= totalPages)
+      setCatArt(allResults)
     }
     fetchCatArt()
   },[])
