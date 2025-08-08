@@ -1,32 +1,11 @@
 import React from "react"
 import { useEffect, useState } from "react";
 
-function ArtCard({art, artId, handleSave}) {
-  const [imageUrl, setImageUrl] = useState(null)
-  const [artist, setArtist] = useState(null)
-
-  useEffect(()=> {
-    async function fetchArtDetails() {
-      try {
-        const response = await fetch(art.api_link)
-        const data = await response.json()
-        const iiifUrl = data.config.iiif_url
-        const imageID = data.data.image_id
-        const fullImageUrl = `${iiifUrl}/${imageID}/full/843,/0/default.jpg`
-        setImageUrl(fullImageUrl)
-        const artistDetails = data.data.artist_display
-        setArtist(artistDetails)
-      } catch (error) {
-        console.error("Failed to fetch artwork details", error)
-      }
-    }
-    fetchArtDetails()
-  },[art.api_link])
-  
+function ArtCard({art, handleSave}) {
   return (
     <div className="art-card">
       <img 
-        src={imageUrl}
+        src={art.image}
         alt = {art.title}
         onError = {(e) => {
           e.target.onError = null;
@@ -34,7 +13,7 @@ function ArtCard({art, artId, handleSave}) {
         }} >
       </img>
       <h2>{art.title}</h2>
-      <p>{artist}</p>
+      <p>{art.artist}</p>
       <button onClick={()=> handleSave(art.id)}>Save</button>
     </div>
   )
