@@ -9,7 +9,7 @@ function NavBar() {
         <img src="/feline-fine-art-logo.png"></img>
       </div>
       <div className="nav-links">
-        <Link to="/" >Home</Link>
+        <Link to="/" >About</Link>
         <Link to="/gallery ">Gallery</Link>
         <Link to="/favorites" >Favorites</Link>
       </div>

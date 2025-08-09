@@ -3,23 +3,32 @@ import { useEffect, useState } from 'react';
 function useArt() {
   const [catArt, setCatArt] = useState([])
   const [catArtDetails, setCatArtDetails] = useState([])
+  const [loading, setLoading] = useState(true)
 
   //fetch inital array of data, storing in state
   useEffect(() => {
     async function fetchCatArt() {
-      try {
-        const response = await fetch("https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=1&limit=100")
+      setLoading(true)
+      let allResults = []
+      let page = 1
+      let totalPages = 0
+      do {
+        const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=cats&query[term][is_public_domain]=true&page=${page}&limit=100`)
         const data = await response.json()
-        setCatArt(data.data)
-      } catch (error) {
-        console.error("Failed to fetch cat art", error)
-      }
+        allResults = [...allResults, ...data.data]
+        totalPages = 10
+        page += 1
+        
+      } while (page <= totalPages)
+      setCatArt(allResults)
     }
     fetchCatArt()
+    
   },[])
 
   //make the second api call for each art piece to get the extra necessary data
   useEffect(() => {
+    let completed = 0
     catArt.forEach((art) => {
       if (art.api_link !== null) {
         async function fetchCatArtDetails() {
@@ -35,17 +44,30 @@ function useArt() {
               'image': `${iiifUrl}/${imageID}/full/843,/0/default.jpg`,
               'type': data.data.artwork_type_title
             }
-
-            setCatArtDetails(prev => {
+            const term = /\bcat(s)?\b/i
+            const titleHasCat = term.test(data.data.title ?? "")
+            const subjectHasCat = (data.data.subject_titles ?? []).some(subject => term.test(subject))
+            if (titleHasCat || subjectHasCat) {
+              setCatArtDetails(prev => {
               const alreadyExists = prev.some(artPiece => artPiece.id === artDetails.id)
               return alreadyExists ? prev : [...prev,artDetails]
             })
-
+            }
           } catch (error) {
             console.error("Failed to fetch art details", error)
+        } finally {
+          completed += 1
+          if (completed === catArt.length) {
+            setLoading(false)
           }
         }
+        }
         fetchCatArtDetails()
+      } else {
+        completed += 1
+        if (completed === catArt.length) {
+          setLoading(false)
+        }
       }
     })
   },[catArt])
@@ -79,7 +101,7 @@ function useArt() {
     }
   },[])
 
-  return {catArtDetails, artData, setArtData}
+  return {catArtDetails, artData, setArtData, loading}
 
 }
 
