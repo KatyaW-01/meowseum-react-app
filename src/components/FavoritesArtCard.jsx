@@ -2,7 +2,7 @@ import React from "react"
 
 function FavoritesArtCard({art, handleClear}) {
   return (
-    <div>
+    <div className="art-card">
       <img 
       src={art.fullImageUrl}
       alt = {art.title}

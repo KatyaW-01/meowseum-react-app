@@ -21,7 +21,7 @@ function ArtList() {
   }, [artId]);
 
   if(filteredData.length > 0) {
-    return <div>
+    return <div className="art-div">
       {
         filteredData.map((art) => (
           <div key={art.id}>

@@ -21,13 +21,13 @@ function FavoritesArtList() {
     return <div>No Favorites Saved</div>
   }
   return (
-    <>
+    <div className="art-div">
       {artData.map((art) => (
         <div key={art.id}>
           <FavoritesArtCard art={art} handleClear={handleClear}/>
         </div>
       ))}
-    </>
+    </div>
   )
 }
 
